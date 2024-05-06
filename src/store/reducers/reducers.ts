@@ -1,14 +1,16 @@
 // reducers.ts
-import { ADD_TASK, REMOVE_TASK , CHANGE_TASK_STATUS, SET_FILTER, SET_ALL_TASKS } from '@src/constants/common';
+import { ADD_TASK, REMOVE_TASK , CHANGE_TASK_STATUS, SET_FILTER, SET_ALL_TASKS , ADD_STATUSES, ADD_USER_INFO } from '@src/constants/common';
 
 import type { TaskList } from '@src/components/TaskManager/TaskList.type';
 import { userInterface } from '@src/services/userService';
+import { statusesInterface } from '@src/services/statusesInterface';
 
 const initialState = {
     tasks: [] as TaskList.Item[],
     filter: '' as string,
     allTasks: [] as TaskList.Item[],
     user: {} as userInterface,
+    statuses: [] as statusesInterface[],
 };
 
 export const taskReducers = (state = initialState, action: any) => {
@@ -26,6 +28,10 @@ export const taskReducers = (state = initialState, action: any) => {
             return { ...state, tasks: state.allTasks.filter(i => i.status === action.payload) };
         case SET_ALL_TASKS:
             return { ...state, allTasks: action.payload, tasks: action.payload };
+        case ADD_USER_INFO:
+            return { ...state, user: action.payload };
+        case ADD_STATUSES:
+            return { ...state, statuses: action.payload };
         default:
             return state;
     }

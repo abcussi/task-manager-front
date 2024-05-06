@@ -19,3 +19,7 @@ export const REMOVE_TASK = 'REMOVE_TASK';
 export const CHANGE_TASK_STATUS = 'CHANGE_TASK_STATUS';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_ALL_TASKS = 'SET_ALL_TASKS';
+
+export const ADD_USER_INFO = 'ADD_USER_INFO';
+export const ADD_STATUSES = 'ADD_STATUSES';
+

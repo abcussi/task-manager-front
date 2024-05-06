@@ -2,7 +2,7 @@
 
 export interface userInterface {
     _id: string;
-    name: number;
+    name: string;
     email: string;
 }
 
