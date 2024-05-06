@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": ".", // root of your project
+    "paths": {
+      "@src/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+    },
+    "allowSyntheticDefaultImports": true,
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],

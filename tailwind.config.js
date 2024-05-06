@@ -1,18 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    './src/**/*.{html,js,jsx,ts,tsx}', // Adjust this to match your source file types
+    './public/index.html', // If you have HTML files in the public folder
+  ],
   theme: {
-    extend: {
-      colors: {
-        slate: {
-          800: "#141E33",
-        },
-      },
-      screens: {
-        "2xl": "1736px",
-      },
-    },
+    extend: {},
   },
-  plugins: [require("@tailwindcss/line-clamp")],
-  darkMode: "class",
-};
+  plugins: [],
+}
