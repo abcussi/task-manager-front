@@ -1,19 +1,28 @@
 // TodoList.tsx
-import { useTaskList, useTaskActions } from '@src/store/hooks/hooks';
+import { useTaskList, useTaskActions, useUser, useStatuses } from '@src/store/hooks/hooks';
 import TodoInputFC from './components/TodoInput';
 import TodoItemFC from './components/TodoItem';
 import { taskListItemBuilder } from './TodoList.build.type';
 import { TaskList } from './TaskList.type';
 import { useEffect } from 'react';
-import useStatuses from '@src/services/statusesInterface';
+import customUseStatuses from '@src/services/statusesInterface';
+import { useTasksActions } from '@src/services/taskService';
 
 const TodoListFC = () => {
     const todoList = useTaskList();
     const { addTask, removeTask, changeTaskStatus, setFilter } = useTaskActions();
-    const { statuses, loading, error } = useStatuses();
+    customUseStatuses();
+    const status = useStatuses();
+    const user = useUser();
+    const { postNewTask } = useTasksActions();
 
+    const handleAddTask = async (task: any) => {
+        await postNewTask(task);
+    };
+    
     const handleAddTaskItem = (value: TaskList.Item) => {
         if (value) addTask(taskListItemBuilder(value));
+        handleAddTask(value);
     };
 
     const handleRemoveTodoItem = (id: number) => removeTask(id);
@@ -23,10 +32,8 @@ const TodoListFC = () => {
     const handleChangeTodoListFilterStatus = (status: string) => setFilter(status);
 
     useEffect(() => {
-      console.log(statuses)
-    
-    }, [])
-    
+        console.log(status);
+    }, [todoList]);
 
     return (
         <div className="min-h-screen w-full flex items-center justify-center bg-teal-500 font-sans">

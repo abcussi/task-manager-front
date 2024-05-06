@@ -19,6 +19,6 @@ export const useTaskActions = () => {
         setFilter: (status: string) => dispatch(setFilter(status)),
         setAllTasks: (tasks: TaskList.Item[]) => dispatch(setAllTasks(tasks)),
         setUser: (user: userInterface) => dispatch(addUserInfo(user)),
-        setAllStatuses: (statuses: statusesInterface) => dispatch(addStatuses(statuses)),
+        setAllStatuses: (statuses: statusesInterface[]) => dispatch(addStatuses(statuses)),
     };
 };

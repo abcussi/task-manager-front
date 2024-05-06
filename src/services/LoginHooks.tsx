@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { URL_LOGIN, URL_USER_FIND_BY_EMAIL } from '@src/constants/common';
 import { setCookie } from './AuthService';
 import { useTaskActions } from '@src/store/hooks/hooks';
+import { fetchByEmail } from './userService';
 
 interface LoginResponse {
     // Define aquí la estructura de los datos que esperas recibir
@@ -38,24 +39,13 @@ export const useLogin = () => {
                 }),
             });
 
-            const userInfo = await fetch(URL_USER_FIND_BY_EMAIL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    email: email,
-                }),
-            });
-
+            const userInfoResponse = await fetchByEmail(email);
 
             if (!response.ok) {
                 throw new Error('Error something went wrong!');
             }
             
             const data = await response.json();
-            const userInfoResponse = await userInfo.json();
             setUser({
                 token: data.data,
                 _id: userInfoResponse.data._id,

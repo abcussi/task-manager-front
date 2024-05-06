@@ -10,4 +10,4 @@ export const changeTaskStatus = (id: number, status: string) => ({ type: CHANGE_
 export const setFilter = (status: string) => ({ type: SET_FILTER, payload: status });
 export const setAllTasks = (tasks: TaskList.Item[]) => ({ type: SET_ALL_TASKS, payload: tasks });
 export const addUserInfo = (user: userInterface) => ({ type: ADD_USER_INFO, payload: user });
-export const addStatuses = (statuses: statusesInterface) => ({ type: ADD_STATUSES, payload: statuses });
+export const addStatuses = (statuses: statusesInterface[]) => ({ type: ADD_STATUSES, payload: statuses });

@@ -1,8 +1,8 @@
 import { FC, memo, useState } from 'react';
 import { TaskList } from '../TaskList.type';
-import { useStatuses, useUser } from '@src/store/hooks/hooks';
-
-// Mock selectors
+import { useStatuses, useTaskList, useUser } from '@src/store/hooks/hooks';
+import { useDebounce } from '@src/services/debounce';
+import { fetchByEmail, userInterface } from '@src/services/userService';
 
 interface Props {
     handleAddTaskItem: (value: TaskList.Item) => void;
@@ -10,28 +10,47 @@ interface Props {
 
 export const TodoInputFC: FC<Props> = (props) => {
     const { handleAddTaskItem } = props;
+    const statuses = useStatuses();
+    console.log("statuses", statuses)
+    const tasks = useTaskList();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [refUserId, setRefUserId] = useState('');
+    const [userFound, setUserFound] = useState<userInterface | null>();
+    const [status, setStatus] = useState<string>(statuses[0]?._id || '');
     const user = useUser();
-    const statuses = useStatuses();
-    const [status, setStatus] = useState('TODO');
-
     const handleAdd = () => {
         const newTaskItem: TaskList.Item = {
-            _id: Math.random().toString(36).substring(2, 9), // Generate a random ID
-            userId: user?.userId,
-            title,
-            description,
-            status,
-            refUserId,
+            userId: user._id,
+            title: title,
+            description: description,
+            status: status,
+            refUserId: userFound?._id || '',
         };
 
         handleAddTaskItem(newTaskItem);
+        
+
         setTitle('');
         setDescription('');
         setRefUserId('');
         setStatus('TODO');
+    };
+
+    const handleDebouncedChange = useDebounce((value: string) => {
+        fetchByEmail(value).then((res) => {
+            if (res) {
+                setUserFound(res.data);
+            }
+        });
+    }, 500);
+
+    const handleChange = (e: string) => {
+        const newValue = e;
+        setRefUserId(newValue);
+
+        // Call the debounced function with the latest input value
+        handleDebouncedChange(newValue);
     };
 
     return (
@@ -50,17 +69,21 @@ export const TodoInputFC: FC<Props> = (props) => {
             />
             <input
                 className="flex-1 shadow appearance-none border text-black rounded w-full py-2 px-3"
-                placeholder="Reference User ID"
+                placeholder="Reference (email)"
                 value={refUserId}
-                onChange={(e) => setRefUserId(e.target.value)}
+                onChange={(e) => handleChange(e.target.value)}
             />
+            <label className={`flex-1 text-sm sm:text-white text-black mt-1`}>
+                {userFound ? `${userFound.email} gonna be refered `:'be sure to have the email of the user to reference the task'}
+            </label>
             <select
                 className="flex-1 shadow appearance-none border text-black rounded w-full py-2 px-3"
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}>
-                {statuses.map((statusOption, idx) => (
-                    <option key={idx} value={statusOption}>
-                        {statusOption}
+                onChange={(e) => setStatus(e.target.value)}
+                >
+                {statuses.map((statusOption) => (
+                    <option key={statusOption._id} value={statusOption._id}>
+                        {statusOption.status}
                     </option>
                 ))}
             </select>

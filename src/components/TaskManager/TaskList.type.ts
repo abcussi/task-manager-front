@@ -1,8 +1,8 @@
 
 export namespace TaskList {
     export interface Item {
-        _id?: string;
-        userId: number;
+        _id?: string | number;
+        userId: string;
         title: string;
         description:string;
         status: string;
