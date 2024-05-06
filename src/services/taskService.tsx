@@ -9,6 +9,9 @@ export const useTasksActions = () => {
 
     const postNewTask = async (task: TaskList.Item) => {
         try {
+            if (task?.referedEmail) {
+                delete task.referedEmail;
+            }
             // Make a POST request to the /tasks endpoint
             const response = await fetch(URL_TASKS, {
                 method: 'POST',
@@ -19,9 +22,9 @@ export const useTasksActions = () => {
 
             // Check if the response status is OK (201 - Created)
             if (response.ok) {
-                const data = await response.json();
+                await response.json();
                 // Add the new task to the store if the response is successful
-                dispatch(addTask(data));
+                dispatch(addTask(task));
             } else {
                 console.error('Error adding task:', response.statusText);
             }

@@ -25,6 +25,7 @@ export const TodoInputFC: FC<Props> = (props) => {
             description: description,
             status: status || statuses[0]?._id,
             refUserId: userFound?._id || '',
+            referedEmail: userFound?.email || '',
         };
 
         handleAddTaskItem(newTaskItem);

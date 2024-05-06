@@ -14,8 +14,8 @@ export const useTaskActions = () => {
     const dispatch = useDispatch();
     return {
         addTask: (item: TaskList.Item) => dispatch(addTask(item)),
-        removeTask: (id: number) => dispatch(removeTask(id)),
-        changeTaskStatus: (id: number, status: string) => dispatch(changeTaskStatus(id, status)),
+        removeTask: (id: string | undefined | number) => dispatch(removeTask(id)),
+        changeTaskStatus: (id: string | undefined | number, status: string) => dispatch(changeTaskStatus(id, status)),
         setFilter: (status: string) => dispatch(setFilter(status)),
         setAllTasks: (tasks: TaskList.Item[]) => dispatch(setAllTasks(tasks)),
         setUser: (user: userInterface) => dispatch(addUserInfo(user)),

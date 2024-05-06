@@ -7,5 +7,6 @@ export namespace TaskList {
         description:string;
         status: string;
         refUserId: string;
+        referedEmail?: string;
     }
 }

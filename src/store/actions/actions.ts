@@ -5,8 +5,8 @@ import { userInterface } from '@src/services/userService';
 import { statusesInterface } from '@src/services/statusesInterface';
 
 export const addTask = (item: TaskList.Item) => ({ type: ADD_TASK, payload: item });
-export const removeTask = (id: number) => ({ type: REMOVE_TASK, payload: id });
-export const changeTaskStatus = (id: number, status: string) => ({ type: CHANGE_TASK_STATUS, payload: { id, status } });
+export const removeTask = (id: string | undefined | number) => ({ type: REMOVE_TASK, payload: id });
+export const changeTaskStatus = (id: string | undefined | number, status: string) => ({ type: CHANGE_TASK_STATUS, payload: { id, status } });
 export const setFilter = (status: string) => ({ type: SET_FILTER, payload: status });
 export const setAllTasks = (tasks: TaskList.Item[]) => ({ type: SET_ALL_TASKS, payload: tasks });
 export const addUserInfo = (user: userInterface) => ({ type: ADD_USER_INFO, payload: user });

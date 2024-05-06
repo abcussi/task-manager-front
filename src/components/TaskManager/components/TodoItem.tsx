@@ -1,49 +1,49 @@
 import { type FC, memo, useMemo } from 'react';
 
 import type { TaskList } from '../TaskList.type';
+import { useStatuses } from '@src/store/hooks/hooks';
 
 interface Props {
     item: TaskList.Item;
-    handleChangeTodoItemStatus: (id: string, status: string) => void;
-    handleRemoveTodoItem: (id: string) => void;
+    handleChangeTodoItemStatus: (id: string | undefined | number, status: string) => void;
+    handleRemoveTodoItem: (id: string | undefined | number) => void;
 }
 export const TodoItemFC: FC<Props> = (props) => {
-    const { item, handleRemoveTodoItem, handleChangeTodoItemStatus } = props;
+    const { item, handleRemoveTodoItem } = props;
+    const statuses = useStatuses();
 
     const itemContentClass = useMemo(() => {
         const className = 'w-[80%] ';
-        if (item.status === 'Completed') {
+        const statusName = statuses.find((item: any) => item._id === item._id)?.status || '';
+        if (statusName === 'Completed') {
             return className + 'line-through text-green-500';
         }
         return className + 'text-grey-darkest';
-    }, [item.status]);
+    }, []);
 
+    const handleChange = (id: string | number | undefined) => {
+        console.log(id)
+    }
     const ChangeStatusAction = useMemo(() => {
-        if (item.status === 'Active') {
+        const statusName = statuses.find((internal: any) => internal._id === item?.status)?.status || '';
+
             return (
                 <button
-                    onClick={() =>
-                        handleChangeTodoItemStatus(item._id || '', 'Completed')
-                    }
+                    onClick={() => handleChange(item)}
                     className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green-500 border-green-500 hover:bg-green-500">
-                    Active
+                    {statusName}
                 </button>
             );
-        }
-        if (item.status === 'Completed') {
-            return (
-                <button
-                    onClick={() => handleChangeTodoItemStatus(item._id || '', 'Active')}
-                    className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-gray-500 border-gray-300 hover:bg-slate-400">
-                    Complete
-                </button>
-            );
-        }
-    }, [item.status]);
+        
+    }, []);
 
     return (
-        <div className="flex mb-4 items-center justify-between">
-            <p className={itemContentClass}>{item.title}</p>
+        <div className="flex flex-row items-center justify-between p-4 mb-4 rounded hover:shadow-lg">
+            <div className="flex flex-1 space-x-4">
+                <p className={`${itemContentClass} flex-1`}>{item?.title}</p>
+                <p className={`${itemContentClass} flex-1`}>{item?.description}</p>
+                <p className={`${itemContentClass} flex-1`}>{item?.refUserId}</p>
+            </div>
             <div className="flex justify-end">
                 {ChangeStatusAction}
                 <button
