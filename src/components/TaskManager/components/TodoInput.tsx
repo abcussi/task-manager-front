@@ -1,9 +1,9 @@
-import { type VFC, memo, useState } from 'react';
+import { type FC, memo, useState } from 'react';
 
 interface Props {
     handleAddTodoItem: (value: string) => void;
 }
-export const TodoInputFC: VFC<Props> = (props) => {
+export const TodoInputFC: FC<Props> = (props) => {
     const { handleAddTodoItem } = props;
     const [value, setValue] = useState('');
 
@@ -15,7 +15,7 @@ export const TodoInputFC: VFC<Props> = (props) => {
     return (
         <div className="flex mt-4">
             <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
+                className="shadow appearance-none border text-black rounded w-full py-2 px-3 mr-4 text-grey-darker"
                 placeholder="Add Todo"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}

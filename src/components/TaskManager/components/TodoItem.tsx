@@ -1,40 +1,39 @@
-import { type VFC, memo, useMemo } from 'react';
+import { type FC, memo, useMemo } from 'react';
 
-import type { TodoList } from '../TodoList.type';
-import { TodoListItemStatus } from '../TodoList.enum';
+import type { TaskList } from '../TaskList.type';
 
 interface Props {
-    item: TodoList.Item;
-    handleChangeTodoItemStatus: (id: number, status: TodoListItemStatus) => void;
-    handleRemoveTodoItem: (id: number) => void;
+    item: TaskList.Item;
+    handleChangeTodoItemStatus: (id: string, status: string) => void;
+    handleRemoveTodoItem: (id: string) => void;
 }
-export const TodoItemFC: VFC<Props> = (props) => {
+export const TodoItemFC: FC<Props> = (props) => {
     const { item, handleRemoveTodoItem, handleChangeTodoItemStatus } = props;
 
     const itemContentClass = useMemo(() => {
         const className = 'w-[80%] ';
-        if (item.status === TodoListItemStatus.Completed) {
+        if (item.status === 'Completed') {
             return className + 'line-through text-green-500';
         }
         return className + 'text-grey-darkest';
     }, [item.status]);
 
     const ChangeStatusAction = useMemo(() => {
-        if (item.status === TodoListItemStatus.Active) {
+        if (item.status === 'Active') {
             return (
                 <button
                     onClick={() =>
-                        handleChangeTodoItemStatus(item.id, TodoListItemStatus.Completed)
+                        handleChangeTodoItemStatus(item._id || '', 'Completed')
                     }
                     className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green-500 border-green-500 hover:bg-green-500">
                     Active
                 </button>
             );
         }
-        if (item.status === TodoListItemStatus.Completed) {
+        if (item.status === 'Completed') {
             return (
                 <button
-                    onClick={() => handleChangeTodoItemStatus(item.id, TodoListItemStatus.Active)}
+                    onClick={() => handleChangeTodoItemStatus(item._id || '', 'Active')}
                     className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-gray-500 border-gray-300 hover:bg-slate-400">
                     Complete
                 </button>
@@ -44,12 +43,12 @@ export const TodoItemFC: VFC<Props> = (props) => {
 
     return (
         <div className="flex mb-4 items-center justify-between">
-            <p className={itemContentClass}>{item.content}</p>
+            <p className={itemContentClass}>{item.title}</p>
             <div className="flex justify-end">
                 {ChangeStatusAction}
                 <button
                     className="flex-no-shrink p-2 ml-2 border-2 rounded text-red-500 border-red-500 hover:text-white hover:bg-red-500"
-                    onClick={() => handleRemoveTodoItem(item.id)}>
+                    onClick={() => handleRemoveTodoItem(item._id || '')}>
                     Remove
                 </button>
             </div>

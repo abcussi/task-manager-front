@@ -1,8 +1,8 @@
-import { type VFC } from 'react';
+import { type FC } from 'react';
 
-import TodoListFC from '@components/todo-list/TodoList';
+import TodoListFC from '@components/TaskManager/TodoList';
 
-const PageAFC: VFC = () => {
+const PageAFC: FC = () => {
     return <TodoListFC />;
 };
 

@@ -1,13 +1,18 @@
-import type { VFC } from 'react';
+import type { FC } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import RootRouter from './router/RootRouter';
 import './App.css';
+// App.tsx
+import { Provider } from 'react-redux';
+import { store } from '@src/store/store';
 
-const App: VFC = () => {
+const App: FC = () => {
     return (
-        <BrowserRouter>
-            <RootRouter />
-        </BrowserRouter>
+        <Provider store={store}>
+            <BrowserRouter>
+                <RootRouter />
+            </BrowserRouter>
+        </Provider>
     );
 };
 

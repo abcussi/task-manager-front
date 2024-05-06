@@ -1,8 +1,8 @@
-import type { VFC } from 'react';
+import type { FC } from 'react';
 import { useRoutes } from 'react-router-dom';
 import { rootRoutes } from './router.config';
 
-const RootRouter: VFC = () => {
+const RootRouter: FC = () => {
     return useRoutes(rootRoutes);
 };
 

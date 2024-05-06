@@ -1,4 +1,4 @@
-import { type VFC, memo, useState, useCallback } from 'react';
+import { type FC, memo, useState, useCallback } from 'react';
 import { TodoListFilterStatus } from '../TodoList.enum';
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 
 const defaultClassName = 'flex-no-shrink py-2 px-4 border-2 rounded ';
 
-const TodoFilterFC: VFC<Props> = (props) => {
+const TodoFilterFC: FC<Props> = (props) => {
     const { handleChangeTodoListFilterStatus } = props;
     const [filterStatus, setFilterStatus] = useState(TodoListFilterStatus.All);
 

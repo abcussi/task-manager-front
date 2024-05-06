@@ -13,3 +13,9 @@ export const URL_TASKS_BY_USER = (userId: string) => `${URL_BASE}/tasks/user/${u
 export const URL_TASKS_BY_STATUS = (status: string) => `${URL_BASE}/tasks/status/${status}`;
 export const URL_DELETE_TASK = (id: string) => `${URL_BASE}/tasks/${id}`;
 export const URL_UPDATE_TASK = (id: string) => `${URL_BASE}/tasks/${id}`;
+
+export const ADD_TASK = 'ADD_TASK';
+export const REMOVE_TASK = 'REMOVE_TASK';
+export const CHANGE_TASK_STATUS = 'CHANGE_TASK_STATUS';
+export const SET_FILTER = 'SET_FILTER';
+export const SET_ALL_TASKS = 'SET_ALL_TASKS';
