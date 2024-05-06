@@ -11,7 +11,6 @@ interface Props {
 export const TodoInputFC: FC<Props> = (props) => {
     const { handleAddTaskItem } = props;
     const statuses = useStatuses();
-    console.log("statuses", statuses)
     const tasks = useTaskList();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -24,7 +23,7 @@ export const TodoInputFC: FC<Props> = (props) => {
             userId: user._id,
             title: title,
             description: description,
-            status: status,
+            status: status || statuses[0]?._id,
             refUserId: userFound?._id || '',
         };
 
@@ -34,7 +33,7 @@ export const TodoInputFC: FC<Props> = (props) => {
         setTitle('');
         setDescription('');
         setRefUserId('');
-        setStatus('TODO');
+        setStatus(statuses[0]?._id || '');
     };
 
     const handleDebouncedChange = useDebounce((value: string) => {
