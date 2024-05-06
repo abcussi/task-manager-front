@@ -32,7 +32,7 @@ export const useRegister = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Error al registrarse');
+        throw new Error('Error something went wrong!');
       }
 
       const data = await response.json();

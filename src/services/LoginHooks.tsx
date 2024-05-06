@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 //import { fetchCsrfToken } from './AuthService';
-import { URL_LOGIN } from '@src/constants/common';
+import { URL_LOGIN, URL_USER_FIND_BY_EMAIL } from '@src/constants/common';
+import { setCookie } from './AuthService';
+import { useTaskActions } from '@src/store/hooks/hooks';
 
 interface LoginResponse {
     // Define aquí la estructura de los datos que esperas recibir
@@ -16,7 +18,7 @@ interface LoginResponse {
 export const useLogin = () => {
     const [loading, setLoading] = useState(false);
     const [msg, setMessage] = useState<string | null>(null);
-
+    const { setUser } = useTaskActions();
     const login = async (email: string, password: string): Promise<LoginResponse | null> => {
         setLoading(true);
         setMessage(null);
@@ -36,11 +38,31 @@ export const useLogin = () => {
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error('Error al iniciar sesión');
-            }
+            const userInfo = await fetch(URL_USER_FIND_BY_EMAIL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    email: email,
+                }),
+            });
 
+
+            if (!response.ok) {
+                throw new Error('Error something went wrong!');
+            }
+            
             const data = await response.json();
+            const userInfoResponse = await userInfo.json();
+            setUser({
+                token: data.data,
+                _id: userInfoResponse.data._id,
+                name: userInfoResponse.data.name,
+                email: userInfoResponse.data.email
+            });
+            setCookie('x-access-token', data.data, 30);
             setLoading(false);
             setMessage('SUCCESS!!!')
             

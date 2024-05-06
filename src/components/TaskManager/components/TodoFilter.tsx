@@ -1,5 +1,4 @@
-import { type FC, memo, useState, useCallback } from 'react';
-import { TodoListFilterStatus } from '../TodoList.enum';
+/* import { type FC, memo, useState, useCallback } from 'react';
 
 interface Props {
     handleChangeTodoListFilterStatus(status: TodoListFilterStatus): void;
@@ -65,3 +64,4 @@ const TodoFilterFC: FC<Props> = (props) => {
 };
 
 export default memo(TodoFilterFC);
+ */
