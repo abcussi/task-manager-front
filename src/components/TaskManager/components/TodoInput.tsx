@@ -1,6 +1,6 @@
 import { FC, memo, useState } from 'react';
 import { TaskList } from '../TaskList.type';
-import { useStatuses, useTaskList, useUser } from '@src/store/hooks/hooks';
+import { useStatuses, useUser } from '@src/store/hooks/hooks';
 import { useDebounce } from '@src/services/debounce';
 import { fetchByEmail, userInterface } from '@src/services/userService';
 
@@ -11,7 +11,6 @@ interface Props {
 export const TodoInputFC: FC<Props> = (props) => {
     const { handleAddTaskItem } = props;
     const statuses = useStatuses();
-    const tasks = useTaskList();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [refUserId, setRefUserId] = useState('');

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 //import { fetchCsrfToken } from './AuthService';
-import { URL_LOGIN, URL_USER_FIND_BY_EMAIL } from '@src/constants/common';
+import { URL_LOGIN } from '@src/constants/common';
 import { setCookie } from './AuthService';
 import { useTaskActions } from '@src/store/hooks/hooks';
 import { fetchByEmail } from './userService';
