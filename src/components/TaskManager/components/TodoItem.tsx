@@ -20,7 +20,7 @@ export const TodoItemFC: FC<Props> = (props) => {
     });
 
     const statuses = useStatuses();
-    const itemContentClass = useMemo(() => {
+/*     const itemContentClass = useMemo(() => {
         const className = 'w-[80%] ';
         const statusName = statuses.find((item: any) => item._id === item._id)?.status || '';
         if (statusName === 'Completed') {
@@ -28,7 +28,7 @@ export const TodoItemFC: FC<Props> = (props) => {
         }
         return className + 'text-grey-darkest';
     }, []);
-
+ */
     /*     const handleChange = (id: string | number | undefined) => {
         console.log(id)
     } */
